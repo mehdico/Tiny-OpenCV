@@ -20,6 +20,8 @@ android {
             cmake {
                 abiFilters("x86", "x86_64", "armeabi-v7a", "arm64-v8a")
                 arguments("-DOpenCV_DIR=${projectDir.absolutePath}/../openCV440/src/main/jniLibs")
+                arguments("-DANDROID_STL=c++_shared")
+                arguments("-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON")
                 targets("opencv_jni_shared")
             }
         }
@@ -32,6 +34,13 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+        }
+    }
+
+    packaging {
+        jniLibs {
+            useLegacyPackaging = false
+            pickFirsts += listOf("**/*.so")
         }
     }
 
